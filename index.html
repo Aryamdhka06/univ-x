@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Perancangan Sistem - Halaman Pencarian Lowongan Pekerjaan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  /* Reset & Base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f9fafb;
+    color: #1f2937;
+    line-height: 1.6;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* Utility */
+  .container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    background: #2563eb;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgb(37 99 235 / 0.5);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1.2px;
+    background: linear-gradient(135deg, #93c5fd, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  nav {
+    display: flex;
+    gap: 32px;
+  }
+  nav a {
+    font-weight: 600;
+    color: white;
+    padding: 8px 4px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  nav a:hover,
+  nav a:focus-visible {
+    background-color: #1e40af;
+    outline-offset: 2px;
+  }
+
+  /* Main */
+  main {
+    padding: 48px 0;
+  }
+
+  /* Page Title */
+  h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #1e40af;
+  }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1e3a8a;
+  }
+
+  /* Search Section */
+  .search-section {
+    margin-bottom: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+  .search-input, .select-filter, button.search-button {
+    padding: 12px 16px;
+    border: 2px solid #2563eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    width: 280px;
+    max-width: 100%;
+    color: #1e3a8a;
+    transition: border-color 0.3s ease;
+  }
+  .search-input:focus, .select-filter:focus {
+    border-color: #93c5fd;
+    outline: none;
+  }
+  button.search-button {
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    width: 160px;
+    transition: background-color 0.3s ease;
+  }
+  button.search-button:hover,
+  button.search-button:focus-visible {
+    background: #1e40af;
+    outline-offset: 2px;
+  }
+
+  /* Job List */
+  .job-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+    gap: 32px;
+  }
+
+  .job-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgb(37 99 235 / 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .job-card:hover,
+  .job-card:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgb(37 99 235 / 0.25);
+    outline: none;
+  }
+
+  .job-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #1e40af;
+  }
+  .job-company {
+    font-weight: 600;
+    color: #2563eb;
+  }
+  .job-location {
+    font-size: 0.95rem;
+    color: #64748b;
+  }
+  .job-description {
+    font-size: 1rem;
+    color: #334155;
+    flex-grow: 1;
+  }
+  .btn-apply {
+    align-self: flex-start;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    margin-top: 12px;
+  }
+  .btn-apply:hover,
+  .btn-apply:focus-visible {
+    background-color: #1e40af;
+    outline-offset: 2px;
+  }
+
+  /* Footer */
+  footer {
+    background: #1e40af;
+    color: white;
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+      padding: 0 12px;
+    }
+    .search-section {
+      flex-direction: column;
+      gap: 12px;
+    }
+    nav {
+      display: none; /* Simple mobile header */
+    }
+  }
+</style>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+<body>
+<header role="banner">
+  <div class="header-inner container">
+    <a href="#" class="logo" aria-label="Sistem Informasi Pusat Karier Universitas X">Pusat Karier Univ X</a>
+    <nav role="navigation" aria-label="Navigasi Utama">
+      <a href="#" tabindex="0">Beranda</a>
+      <a href="#" tabindex="0">Lowongan</a>
+      <a href="#" tabindex="0">Alumni</a>
+      <a href="#" tabindex="0">Perusahaan</a>
+      <a href="#" tabindex="0">Kontak</a>
+    </nav>
+  </div>
+</header>
+
+<main role="main" class="container" aria-labelledby="pageTitle">
+  <h1 id="pageTitle">Cari Lowongan Pekerjaan</h1>
+
+  <section class="search-section" aria-label="Filter pencarian lowongan">
+    <input 
+      type="search" 
+      class="search-input" 
+      id="searchJobs" 
+      placeholder="Cari berdasarkan posisi atau kata kunci..." 
+      aria-label="Masukkan kata kunci pencarian lowongan" 
+      autocomplete="off"
+      />
+    <select class="select-filter" id="filterLocation" aria-label="Filter lokasi pekerjaan">
+      <option value="">Semua Lokasi</option>
+      <option value="Jakarta">Jakarta</option>
+      <option value="Bandung">Bandung</option>
+      <option value="Surabaya">Surabaya</option>
+      <option value="Yogyakarta">Yogyakarta</option>
+    </select>
+    <button class="search-button" id="btnSearch" aria-label="Tombol cari lowongan">Cari</button>
+  </section>
+
+  <section aria-live="polite" aria-relevant="all" aria-atomic="true">
+    <div class="job-list" id="jobList" tabindex="0" aria-label="Daftar hasil pencarian lowongan pekerjaan">
+      <!-- Contoh Lowongan Pekerjaan -->
+      <article class="job-card" tabindex="0" role="region" aria-labelledby="job1-title job1-company">
+        <h2 class="job-title" id="job1-title">Frontend Developer</h2>
+        <p class="job-company" id="job1-company">PT Teknologi Indonesia</p>
+        <p class="job-location" aria-label="Lokasi pekerjaan">Jakarta</p>
+        <p class="job-description">Bertanggung jawab membuat UI aplikasi web yang responsif dan menarik.</p>
+        <button class="btn-apply" aria-label="Lamar posisi Frontend Developer di PT Teknologi Indonesia">Lamar</button>
+      </article>
+
+      <article class="job-card" tabindex="0" role="region" aria-labelledby="job2-title job2-company">
+        <h2 class="job-title" id="job2-title">Data Analyst</h2>
+        <p class="job-company" id="job2-company">CV Data Kreatif</p>
+        <p class="job-location" aria-label="Lokasi pekerjaan">Bandung</p>
+        <p class="job-description">Menganalisis data untuk membantu pengambilan keputusan bisnis.</p>
+        <button class="btn-apply" aria-label="Lamar posisi Data Analyst di CV Data Kreatif">Lamar</button>
+      </article>
+
+      <article class="job-card" tabindex="0" role="region" aria-labelledby="job3-title job3-company">
+        <h2 class="job-title" id="job3-title">Marketing Manager</h2>
+        <p class="job-company" id="job3-company">PT Sukses Makmur</p>
+        <p class="job-location" aria-label="Lokasi pekerjaan">Surabaya</p>
+        <p class="job-description">Mengelola dan merancang strategi pemasaran produk perusahaan.</p>
+        <button class="btn-apply" aria-label="Lamar posisi Marketing Manager di PT Sukses Makmur">Lamar</button>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  &copy; 2024 Sistem Informasi Pusat Karier Universitas X. Semua hak cipta dilindungi.
+</footer>
+
+<script>
+  // Contoh sederhana fungsionalitas filter job list (static data here)
+  document.getElementById('btnSearch').addEventListener('click', () => {
+    const keyword = document.getElementById('searchJobs').value.toLowerCase();
+    const locationFilter = document.getElementById('filterLocation').value.toLowerCase();
+    const jobCards = document.querySelectorAll('.job-card');
+
+    jobCards.forEach(card => {
+      const title = card.querySelector('.job-title').textContent.toLowerCase();
+      const company = card.querySelector('.job-company').textContent.toLowerCase();
+      const location = card.querySelector('.job-location').textContent.toLowerCase();
+
+      const matchesKeyword = title.includes(keyword) || company.includes(keyword);
+      const matchesLocation = locationFilter === '' || location.includes(locationFilter);
+
+      if (matchesKeyword && matchesLocation) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  // Accessibility: focus management on search button press - optional enhancement
+  document.getElementById('btnSearch').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.target.click();
+    }
+  });
+</script>
+</body>
+</html>
+
